@@ -8,6 +8,7 @@ function showTime() {
     const currentTime = date.toLocaleTimeString();
     time.textContent = currentTime;
     showDate()
+    showGreeting()
     setTimeout(showTime, 1000);
   }
 
@@ -28,15 +29,39 @@ function showDate() {
 showDate();
 
 
+// 2. Приветствие
+
+function getTimeOfDay() {
+    const date = new Date();
+    const hours = date.getHours();
+    if (hours <=5) return 'night'
+    if (hours <=11) return 'morning'
+    if (hours <=17) return 'afternoon'
+    if (hours <=23) return 'evening'
+}
 
 
+function showGreeting() {
+    const greeting = document.querySelector('.greeting');
+    const timeOfDay = getTimeOfDay();
+    const greetingText = `Good ${timeOfDay}`;
+    greeting.textContent = greetingText;
+}
+
+function setLocalStorage() {
+    const name = document.querySelector('.name');
+    localStorage.setItem('name', name.value);
+  }
+  window.addEventListener('beforeunload', setLocalStorage)
 
 
-
-
-
-
-
+  function getLocalStorage() {
+    const name = document.querySelector('.name');
+    if(localStorage.getItem('name')) {
+      name.value = localStorage.getItem('name');
+    }
+  }
+  window.addEventListener('load', getLocalStorage)
 
 
 
