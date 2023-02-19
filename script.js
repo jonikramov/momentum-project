@@ -65,7 +65,60 @@ function setLocalStorage() {
 
 
 
+// 2. Слайдер изображений
 
+const slideNext = document.querySelector('.slide-next')
+const slidePrev = document.querySelector('.slide-prev')
+
+function getRandomNum() {
+  return Math.floor(Math.random() * (20 - 1 + 1)) + 1; //Максимум и минимум включаются
+}
+
+let randomNum = getRandomNum()
+
+
+// function setBg() {
+//   const timeOfDay = getTimeOfDay();
+//   let bgNum = String(randomNum).padStart(2, "0");
+//   const body = document.querySelector('.body');
+//   body.style.backgroundImage = `url('https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeOfDay}/${bgNum}.jpg')`;
+// }
+
+function setBg() {
+  const timeOfDay = getTimeOfDay();
+  let bgNum = String(randomNum).padStart(2, "0");
+  const body = document.querySelector('.body');
+  const img = new Image();
+  img.src = `https://raw.githubusercontent.com/jonikramov/momentum-backgrounds/main/${timeOfDay}/${bgNum}.webp`;
+  img.onload = () => {      
+    body.style.backgroundImage = `url("${img.src}")`;
+  }; 
+}
+
+setBg()
+
+
+
+function getSlideNext() {
+  if (randomNum === 20) {
+    randomNum = 1
+  } else {
+    randomNum += 1
+  } 
+  setBg()
+}
+
+function getSlidePrev() {
+  if (randomNum === 1) {
+    randomNum = 20
+  } else {
+    randomNum -= 1
+  } 
+  setBg()
+}
+
+slideNext.addEventListener('click', getSlideNext)
+slidePrev.addEventListener('click', getSlidePrev)
 
 
 
