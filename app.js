@@ -10,7 +10,7 @@ function showTime() {
     showDate()
     showGreeting()
     setTimeout(showTime, 1000);
-       
+
   }
 
 showTime()
@@ -24,7 +24,7 @@ function showDate() {
     const options = {weekday: 'long', month: 'long', day: 'numeric'};
     const currentDate = date1.toLocaleDateString('en-GB', options);
     date.textContent = currentDate;
-       
+
   }
 
 showDate();
@@ -40,13 +40,13 @@ function getTimeOfDay() {
   if (hours<=5) {
     return `night`;
   } else if (hours<=11) {
-    return `morning`; 
+    return `morning`;
   } else if (hours<=17) {
-    return `afternoon`; 
+    return `afternoon`;
   } else if (hours<=23) {
-    return `evening`; 
-  }  
-  
+    return `evening`;
+  }
+
 }
 
 
@@ -94,9 +94,9 @@ function setBg() {
   const body = document.querySelector('body');
   const img = new Image();
   img.src = `https://raw.githubusercontent.com/jonikramov/momentum-backgrounds/main/${timeOfDay}/${bgNum}.webp`;
-  img.onload = () => {      
+  img.onload = () => {
     body.style.backgroundImage = `url("${img.src}")`;
-  }; 
+  };
 }
 
 setBg()
@@ -116,7 +116,7 @@ function getSlideNext() {
   } else {
     randomNum += 1;
   }
-  
+
   setBg()
 }
 
@@ -127,7 +127,7 @@ function getSlidePrev() {
   } else {
     randomNum -= 1;
   }
-  
+
   setBg()
 }
 
@@ -179,7 +179,7 @@ function setCity(event) {
   if (event.code === 'Enter') {
     getWeather();
     city.blur();
-  } 
+  }
 }
 
 document.addEventListener('DOMContentLoaded', getWeather);
@@ -216,10 +216,10 @@ const changeQuote = document.querySelector('.change-quote');
 const quoteContent = document.querySelector('.quote');
 const quoteAuthor = document.querySelector('.author');
 
-async function getQuotes() {  
+async function getQuotes() {
   const quotes = "quotes-en.json";
   const res = await fetch(quotes);
-  const data = await res.json(); 
+  const data = await res.json();
   const randomNumber = getRandomInt(0, data.length);
   const quoteObj = data[randomNumber];
   quoteContent.textContent = quoteObj.q;
@@ -241,7 +241,7 @@ const playPrevBtn = document.querySelector('.play-prev');
 const playNextBtn = document.querySelector('.play-next');
 
 /* Флаг */
-let isPlay = false; 
+let isPlay = false;
 
 const audio = new Audio();
 
@@ -254,14 +254,14 @@ function playAudio() {
   if (!isPlay) /* true -  start playing music */ {
     audio.play();
     playBtn.classList.add('pause');
-    isPlay = true; 
+    isPlay = true;
     activePlayingView()
-    
+
 
   } else /* false - stop playing music */ {
     audio.pause();
     playBtn.classList.remove('pause');
-    isPlay = false; 
+    isPlay = false;
   }
 
   audio.onended = (event) => {
@@ -274,7 +274,7 @@ function playAudio() {
 function playNext() {
   if (playNum === playList.length-1) {
     playNum = 0;
-    isPlay = false; 
+    isPlay = false;
     playAudio()
     console.log(`${playNum} if part`)
     activePlayingView
@@ -282,31 +282,31 @@ function playNext() {
 
   } else {
     playNum = playNum + 1;
-    isPlay = false; 
+    isPlay = false;
     playAudio()
     activePlayingView
     console.log(`${playNum}  playNext() else`)
   }
 
-  
+
 }
 
 
 function playPrev() {
   if (playNum === 0) {
     playNum = playList.length - 1;
-    isPlay = false; 
+    isPlay = false;
     playAudio()
     console.log(`${playNum} if part`)
     return
 
   } else {
     playNum = playNum - 1;
-    isPlay = false; 
+    isPlay = false;
     playAudio()
     console.log(playNum)
   }
-    
+
 }
 
 // playBtn.addEventListener('click', toggleBtn);
@@ -346,7 +346,7 @@ function activePlayingView() {
 /* Перевод приложения на два языка (en/ru или en/be) +15 */
 
 const greetingTranslation = {
-  
+
 }
 
 // const greetingTranslation = {
@@ -433,7 +433,7 @@ const greetingTranslation = {
 //   isPlay = true;
 // }
 
-// playBtn.addEventListener('click', playAudio); /* for play/pause music */ 
+// playBtn.addEventListener('click', playAudio); /* for play/pause music */
 // playBtn.addEventListener('click', toggleBtn); /* for change icon play/pause */
 
 // playPrevBtn.addEventListener('click', playPrev);
