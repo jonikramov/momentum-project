@@ -134,12 +134,14 @@ async function getWeather() {
   weatherError.textContent = `Error! city not found for ${city.value}! `;
 
   if(data.cod === '404'){
+    weatherIcon.className = '';
     temperature.textContent = ''
     weatherDescription.textContent = ''
     wind.textContent = ''
     humidity.textContent = ''
     weatherError.textContent = `Error! city not found for ${city.value}! `
   } else if (data.cod === '400'){
+    weatherIcon.className = '';
     temperature.textContent = ''
     weatherDescription.textContent = ''
     wind.textContent = ''
@@ -204,6 +206,112 @@ async function getQuotes() {
 getQuotes();
 
 changeQuote.addEventListener('click', getQuotes)
+
+
+// 6. Аудиоплеер
+
+const playBtn = document.querySelector('.play');
+const playPrevBtn = document.querySelector('.play-prev');
+const playNextBtn = document.querySelector('.play-next');
+
+/* Флаг */
+let isPlay = false;
+let playNum = 0;
+
+import playList from './playList.js';
+
+console.log(playList)
+
+const audio = new Audio();
+
+function playAudio() {
+  audio.src = playList[playNum].src;
+  audio.currentTime = 0;
+  if (!isPlay) {
+    audio.play();
+    playBtn.classList.add('pause');
+    isPlay = true;
+    activePlayingView()
+  } else {
+    audio.pause();
+    playBtn.classList.remove('pause');
+    isPlay = false;
+  }
+
+  audio.onended = (event) => {
+    playNext()
+  };
+
+}
+
+function playNext() {
+  if (playNum === playList.length-1) {
+    playNum = 0;
+    isPlay = false;
+    playAudio()
+    activePlayingView()
+  } else {
+    playNum = playNum + 1
+    isPlay = false;
+    playAudio()
+    activePlayingView
+  }
+}
+
+function playPrev() {
+  if (playNum === 0) {
+    playNum = playList.length-1;
+    isPlay = false;
+    playAudio()
+    activePlayingView()
+  } else {
+    playNum = playNum - 1
+    isPlay = false;
+    playAudio()
+    activePlayingView()
+  }
+}
+
+
+
+playBtn.addEventListener('click', playAudio)
+playPrevBtn.addEventListener('click', playPrev)
+playNextBtn.addEventListener('click', playNext)
+
+
+const playListContainer = document.querySelector('.play-list');
+
+for (let i=0; i < playList.length; i++) {
+  const li = document.createElement('li');
+  li.classList.add('play-item')
+  li.textContent = playList[i].title
+  playListContainer.append(li)
+}
+
+
+
+function activePlayingView() {
+  const customAudioArray  = document.querySelectorAll('.play-item');
+  customAudioArray.forEach(elem => {
+    elem.classList.remove('item-active')
+  })
+  customAudioArray[playNum].classList.add('item-active')
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
