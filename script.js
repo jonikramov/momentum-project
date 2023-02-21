@@ -119,6 +119,7 @@ const temperature = document.querySelector('.temperature');
 const weatherDescription = document.querySelector('.weather-description');
 const wind = document.querySelector('.wind');
 const humidity = document.querySelector('.humidity');
+const weatherError = document.querySelector('.weather-error');
 const city = document.querySelector('.city');
 city.value = localStorage.getItem('city') || 'Tashkent';
 
@@ -127,12 +128,33 @@ async function getWeather() {
   const res = await fetch(url);
   const data = await res.json();
 
-  weatherIcon.className = 'weather-icon owf';
-  weatherIcon.classList.add(`owf-${data.weather[0].id}`);
-  temperature.textContent = `${Math.round(data.main.temp)}°C`;
-  weatherDescription.textContent = data.weather[0].description;
-  wind.textContent = `Wind speed: ${Math.round(data.wind.speed)} m/s`
-  humidity.textContent = `Humidity: ${data.main.humidity} %`
+
+
+
+  weatherError.textContent = `Error! city not found for ${city.value}! `;
+
+  if(data.cod === '404'){
+    temperature.textContent = ''
+    weatherDescription.textContent = ''
+    wind.textContent = ''
+    humidity.textContent = ''
+    weatherError.textContent = `Error! city not found for ${city.value}! `
+  } else if (data.cod === '400'){
+    temperature.textContent = ''
+    weatherDescription.textContent = ''
+    wind.textContent = ''
+    humidity.textContent = ''
+    weatherError.textContent = 'Nothing to geocode'
+  } else {
+    weatherIcon.className = 'weather-icon owf';
+    weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+    temperature.textContent = `${Math.round(data.main.temp)}°C`;
+    weatherDescription.textContent = data.weather[0].description;
+    wind.textContent = `Wind speed: ${Math.round(data.wind.speed)} m/s`
+    humidity.textContent = `Humidity: ${data.main.humidity} %`
+    weatherError.textContent = ''
+  }
+
 }
 
 
@@ -153,6 +175,39 @@ function getCityLocalStorage() {
   }
 }
 window.addEventListener('load', getCityLocalStorage)
+
+
+// 5. Виджет "цитата дня"
+
+/* Получение случайного целого числа в заданном интервале */
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //Максимум не включается, минимум включается
+}
+
+const changeQuote = document.querySelector('.change-quote');
+const quoteContent = document.querySelector('.quote');
+const quoteAuthor = document.querySelector('.author');
+
+async function getQuotes() {
+  const quotes = 'quotes-en.json';
+  const res = await fetch(quotes);
+  const data = await res.json();
+  const randomNumber = getRandomInt(0, data.length);
+  const quoteObj = data[randomNumber];
+  quoteContent.textContent = quoteObj.q;
+  quoteAuthor.textContent = quoteObj.a;
+}
+
+getQuotes();
+
+
+changeQuote.addEventListener('click', getQuotes)
+window.addEventListener('load', getQuotes)
+
+
 
 
 
