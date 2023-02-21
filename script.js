@@ -203,9 +203,8 @@ async function getQuotes() {
 
 getQuotes();
 
-
 changeQuote.addEventListener('click', getQuotes)
-window.addEventListener('load', getQuotes)
+
 
 
 
