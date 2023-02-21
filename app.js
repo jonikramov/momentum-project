@@ -235,6 +235,7 @@ window.addEventListener('load', getQuotes)
 
  import playList from './playList.js';
 
+ console.log(123);
 
 const playBtn = document.querySelector('.play');
 const playPrevBtn = document.querySelector('.play-prev');
@@ -244,6 +245,8 @@ const playNextBtn = document.querySelector('.play-next');
 let isPlay = false;
 
 const audio = new Audio();
+
+console.log(audio)
 
 let playNum = 0;
 
